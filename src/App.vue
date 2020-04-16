@@ -1,27 +1,34 @@
 <template>
   <div id="app"  class="Osnova">
     <img alt="Vue logo" src="./assets/logo.png">
-      <HelloWorld msg="Welcome to Your Vue.js App"/>
-<!--      Первая страница-->
-<!--      <div v-if="easy">-->
-     <br>
-      <a class="Knopka">
-      <input v-model="Line" type="text" placeholder="Text" v-on:keyup.enter="RespTop">
-      <input type="submit" value="Send" @click="RespTop">
-    </a>
+            <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <!--      Первая страница-->
+      <!--      <div v-if="easy">-->
       <br>
-    <ul type="none" align="left">
-      <li v-for="(man,index) in HeroTop" :key="man.message">
-        <input  type="checkbox" v-model="man.Zakup">
-<!--          <span :style="{'text-decoration': man.Zakup==1?'line-through':'none'}">{{index + 1}} - {{man.message}}</span>-->
-          <span :class="{'del': man.Zakup}">{{index + 1}}. {{man.message}}</span>
-        <button  @click="NukeTop(index)" align="right">Delete</button >
-<!--          <del v-if="man.Zakup">{{index + 1}} - {{man.message}}</del>-->
-<!--          <span v-else>{{index + 1}} - {{man.message}}</span>-->
-      </li>
-    </ul>
-<!--      <br>-->
-      <input type="button" value="Выделить все" @click="TeamTop">
+      <div class="tex">
+        <span>{{data}}</span>
+        <br>
+        <span>{{HeroTop.length}} Active object</span>
+        <br>
+        <a class="Knopka">
+          <input v-model="Line" type="text" placeholder="Text" v-on:keyup.enter="RespTop">
+          <input type="submit" value="Send" @click="RespTop">
+        </a>
+        <br>
+
+        <ul type="none" margin-left="60px">
+          <li v-for="(man,index) in HeroTop" :key="man.message" class="list">
+              <input  type="checkbox" v-model="man.Zakup" class="box">
+                        <!--          <span :style="{'text-decoration': man.Zakup==1?'line-through':'none'}">{{index + 1}} - {{man.message}}</span>-->
+              <span :class="{'del': man.Zakup}">{{index + 1}}. {{man.message}}</span>
+              <button  @click="NukeTop(index)" class="delete">Delete</button >
+                        <!--          <del v-if="man.Zakup">{{index + 1}} - {{man.message}}</del>-->
+                        <!--          <span v-else>{{index + 1}} - {{man.message}}</span>-->
+          </li>
+        </ul>
+      </div>
+      <br>
+      <input type="button" value="Выбрать все" @click="TeamTop">
       <input type="button" value="Удалить выделенное" @click="KillTop">
       <br>
 <!--      </div>-->
@@ -52,6 +59,9 @@
 </template>
 
 <script>
+    var moment = require('moment');
+    console.log(moment(). format());
+    moment.locale('ru');
   // import HelloWorld from './components/HelloWorld.vue'
 
   export default {
@@ -61,6 +71,7 @@
     },
     data(){
       return{
+          data: moment().format("dddd, MMM D" ),
           Line:"",
           Che:0,
           i:1,
@@ -85,14 +96,14 @@
           this.HeroTop.push({id:Date.now(), message: this.Line, Zakup:0});
           this.Line=null;},
         RespBot(){
-            this.HeroBot.push({id:Date.now(), message: this.Line, Zakup:0});
-            this.Line=null;},
+          this.HeroBot.push({id:Date.now(), message: this.Line, Zakup:0});
+          this.Line=null;},
       KillTop(){
           for (var i=0;i<this.HeroTop.length;++i){
               if(this.HeroTop[i].Zakup==1){
                   this.HeroTop.splice(i,1);
                   i=i-1;}}
-            },
+      },
         // KillBot(){
         //     for (var i=0;i<this.HeroBot.length;++i){
         //         if(this.HeroBot[i].Zakup==1){
@@ -142,6 +153,10 @@
 </script>
 
 <style>
+    ul{
+        padding:0;
+        line-height: 1.5;
+    }
   body{
       background-color: aqua;
   }
@@ -159,9 +174,21 @@
     .Osnova{
         background-color: grey;
         width: 800px;
-        margin-left: 15vw;
+        margin-left: 10vw;
+        padding-left: 15vw;
+        border-radius: 5px;
+        box-shadow: 5px 5px 3px;
     }
     .Knopka{
         float:left;
+    }
+    .tex{
+        align:left;
+        text-align: left;
+    }
+    .delete{
+        display:inline;
+        text-align: right;
+        float: right;
     }
 </style>
